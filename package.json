@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "knex": "node --loader tsx ./node_modules/.bin/knex",
-    "knex:migrate": "node --loader tsx ./node_modules/.bin/knex -- migrate:make",
+    "knex:create-migrate": "node --loader tsx ./node_modules/.bin/knex -- migrate:make",
+    "knex:execute-migrate": "node --loader tsx ./node_modules/.bin/knex -- migrate:latest",
+    "knex:rollback-migrate": "node --loader tsx ./node_modules/.bin/knex -- migrate:rollback",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix"
   },
