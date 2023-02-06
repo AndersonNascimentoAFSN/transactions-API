@@ -5,6 +5,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
+    "knex": "node --loader tsx ./node_modules/.bin/knex",
+    "knex:migrate": "node --loader tsx ./node_modules/.bin/knex -- migrate:make",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix"
   },
