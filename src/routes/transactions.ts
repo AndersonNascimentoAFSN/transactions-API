@@ -13,7 +13,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
     }
   })
 
-  app.get('/:id', async (request) => {
+  app.get('/:id', async (request, response) => {
     const getTransactionParamsSchema = z.object({
       id: z.string().uuid(),
     })
@@ -21,7 +21,24 @@ export async function transactionsRoutes(app: FastifyInstance) {
 
     const transaction = await knex('transactions').where({ id }).first()
 
+    if (!transaction) {
+      return response
+        .code(404)
+        .send({ code: 404, message: 'transaction not found' })
+    }
+
     return { transaction }
+  })
+
+  app.delete('/:id', async (request, response) => {
+    const deleteTransactionParamsSchema = z.object({
+      id: z.string().uuid(),
+    })
+    const { id } = deleteTransactionParamsSchema.parse(request.params)
+
+    await knex('transactions').where({ id }).delete()
+
+    return response.code(204).send()
   })
 
   app.post('/', async (request, response) => {
